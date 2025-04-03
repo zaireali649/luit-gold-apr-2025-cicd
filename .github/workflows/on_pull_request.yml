@@ -17,3 +17,12 @@ jobs:
             exit 1
           fi
           echo "✅ Health check passed."
+      - name: Fail health check
+        run: |
+          STATUS_CODE=$(curl -o /dev/null -s -w "%{http_code}\n" http://172.31.81.146/)
+          echo "HTTP Status Code: $STATUS_CODE"
+          if [ "$STATUS_CODE" -e 200 ]; then
+            echo "❌ Health check failed!"
+            exit 1
+          fi
+          echo "✅ Health check passed."
